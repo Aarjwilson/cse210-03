@@ -1,0 +1,77 @@
+@startuml Hilo Game Design 
+!define DARKRED
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+package main {
+
+    class Director {
+        - bool is_playing
+
+        - jumper: Jumper
+        - puzzle: Puzzle
+        - terminal_service: TerminalService
+
+        + start_game()
+        - _get_inputs()
+        - _do_updates()
+        - _do_outputs()
+    }
+
+    class Jumper {
+
+        - list _parachute
+
+        + _check_parachute()
+        + _display()
+
+    }
+
+    class Puzzle {
+
+        - string _word
+        - string _blank 
+
+        - display()
+        - process_guess()
+        - replace()
+
+    }
+
+    class TerminalService {
+
+        + read_number()
+        + read_text()
+        + write_text()
+
+    }
+
+    Jumper -> Director
+    TerminalService -> Director
+    Puzzle -> Director
+
+
+    note bottom of TerminalService
+    All three functions will have a string argument.
+    end note
+
+    note top of Puzzle
+    The Puzzle class will display the blank spaces and letters.
+    It will also check the players guess and replace the
+    blank spaces with letters when guessed right.
+    end note
+
+    note bottom of Jumper
+    The Jumper class will display the Parachute. It will also
+    check to see if all the pieces for the parachute are
+    gone.
+    end note
+
+    note top of Director
+    The Director class will manage the game flow and use the other 
+    3 classes in running the game.
+    end note
+
+}
+
+
+@enduml
