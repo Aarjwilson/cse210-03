@@ -43,9 +43,19 @@ class Director:
             self._do_outputs()
 
     def _get_inputs(self):
+        """
+        Takes the players guess and turns it into a string
+        """
         self.guess = self._terminal_service.read_text("Guess a letter [a-z]: ")
         
     def _do_updates(self):
+        """
+        Take the players guess and see if it is in the word:
+        If correct: replace all instances of that letter
+        If wrong: remove a part of the parachute
+
+        Also, if there are no more blank spaces or no more parachute the game is over
+        """
         correct = self.puzzle._check(self.guess.upper())
         if correct:
             self.puzzle._replace(self.guess.upper())
@@ -59,5 +69,8 @@ class Director:
         
         
     def _do_outputs(self):
+        """
+        Display the word/blank spaces and the parachute
+        """
         self.puzzle._display()
         self.jumper._display()
