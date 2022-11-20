@@ -5,7 +5,8 @@
 package main {
 
     class Director {
-        - bool is_playing
+        - bool _is_playing
+        - string _guess
 
         - jumper: Jumper
         - puzzle: Puzzle
@@ -31,8 +32,8 @@ package main {
 
     class Puzzle {
 
-        - string _word
-        - string _blanks 
+        - list _word
+        - list _blanks 
         
         - _choose_word()
         - _display()
