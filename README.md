@@ -20,11 +20,12 @@ You can also run the program from an IDE like Visual Studio Code. Start your IDE
 ## Project Structure
 The project files and folders are organized as follows:
 ```
-root                    (project root folder)
-+-- jumper              (source code for game)
-  +-- game              (specific classes)
-  +-- __main__.py       (program entry point)
-+-- README.md           (general info)
+root                               (project root folder)
++-- jumper                         (source code for game)
+  +-- game                         (specific classes)
+  +-- __main__.py                  (program entry point)
++-- README.md                      (general info)
++-- Jumper_Game_Design.plantuml    (code structure)
 ```
 
 ## Required Technologies
