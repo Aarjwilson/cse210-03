@@ -9,9 +9,9 @@ class Director:
     The responsibility of a Director is to control the sequence of play.
 
     Attributes:
-        hider (Hider): The game's hider.
+        jumper (Jumper): The game's jumper.
         is_playing (boolean): Whether or not to keep playing.
-        seeker (Seeker): The game's seeker.
+        puzzle (Puzzle): The game's puzzle.
         terminal_service: For getting and displaying information on the terminal.
     """
 
@@ -21,9 +21,10 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        self._hider = Hider()
+        self.jumper = Jumper()
+        self.puzzle = Puzzle()
+        self.guess = ""
         self._is_playing = True
-        self._seeker = Seeker()
         self._terminal_service = TerminalService()
         
     def start_game(self):
@@ -32,35 +33,31 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
+        self.puzzle._choose_word()
+        self.puzzle._display()
+        self.jumper._display()
+
         while self._is_playing:
             self._get_inputs()
             self._do_updates()
             self._do_outputs()
 
     def _get_inputs(self):
-        """Moves the seeker to a new location.
-
-        Args:
-            self (Director): An instance of Director.
-        """
-        new_location = self._terminal_service.read_number("\nEnter a location [1-1000]: ")
-        self._seeker.move_location(new_location)
+        self.guess = self._terminal_service.read_text("Guess a letter [a-z]: ")
         
     def _do_updates(self):
-        """Keeps watch on where the seeker is moving.
+        correct = self.puzzle._check(self.guess.upper())
+        if correct:
+            self.puzzle._replace(self.guess.upper())
+        else:
+            self.jumper._remove()
 
-        Args:
-            self (Director): An instance of Director.
-        """
-        self._hider.watch_seeker(self._seeker)
+        self._is_playing = self.jumper._check()
+
+        if "_" not in self.puzzle._blanks:
+            self._is_playing = False
+        
         
     def _do_outputs(self):
-        """Provides a hint for the seeker to use.
-
-        Args:
-            self (Director): An instance of Director.
-        """
-        hint = self._hider.get_hint()
-        self._terminal_service.write_text(hint)
-        if self._hider.is_found():
-            self._is_playing = False
+        self.puzzle._display()
+        self.jumper._display()

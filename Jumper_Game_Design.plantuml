@@ -19,21 +19,26 @@ package main {
 
     class Jumper {
 
-        - list _parachute
+        - list _image
+        - bool _alive
 
-        + _check_parachute()
-        + _display()
+
+        - _display()
+        - _remove()
+        - _check()
 
     }
 
     class Puzzle {
 
         - string _word
-        - string _blank 
-
-        - display()
-        - process_guess()
-        - replace()
+        - string _blanks 
+        
+        - _choose_word()
+        - _display()
+        - _replace()
+        - _check()
+        
 
     }
 
